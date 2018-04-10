@@ -29,15 +29,20 @@ describe('tests E2E', () => {
     });
 
     afterEach(() => {
+        // client1.destroy();
         app.close();
-        client1.destroy();
     });
 
-    it.only('client writes message to log file', ()=> {
+    it.only('client writes message to log file', (done)=> {
         const message = 'Client message';
-        client1.write(message);
-        const expectedMessage = fs.readFileSync(clientExpectedLog, 'utf8').split(' ** ')[1].trim('\n');
-        const clientLog = fs.readFileSync(clientLogFile, 'utf8').split(' ** ')[1].trim('\n');
-        assert.equal(expectedMessage, clientLog);
+        client1.write(message, () => {
+            const expectedMessage = fs.readFileSync(clientExpectedLog, 'utf8').split(' ** ')[1].trim('\n');
+            const clientLog = fs.readFileSync(clientLogFile, 'utf8')
+            // .split(' ** ')[1].trim('\n');
+            console.log('client log is: ', clientLog);
+            assert.equal(expectedMessage, clientLog);
+            done();
+
+        });
     });
 });
