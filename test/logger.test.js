@@ -11,23 +11,15 @@ describe('Logger class', () => {
 
     beforeEach(() => {
         logger = new Logger(testLogFile);  
-        unlink(testLogFile)
-            .catch(err => {
-                if(err.code !== 'ENOENT') throw err; 
-            });  
-    });
-
-    after(() => {
-        unlink(testLogFile)
-            .catch(err => {
-                if(err.code !== 'ENOENT') throw err; 
-            }); 
+        fs.truncate(testLogFile, 0, function(){ console.log('done'); }); /*eslint-disable-line */
     });
 
     it('logs message to file given', () => {
         const message = 'Hello World';
         logger.log(message);
-        const expected = fs.readFileSync(testExpectedFile);
-        assert.ok(expected);
+        logger.log(message);
+        const expected = fs.readFileSync(testExpectedFile, 'utf8');
+        const result = fs.readFileSync(testLogFile, 'utf8');
+        assert.deepEqual(result, expected);
     });
 });
