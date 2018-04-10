@@ -17,9 +17,9 @@ describe('Logger class', () => {
     it('logs message to file given', () => {
         const message = 'Hello World';
         logger.log(message);
-        logger.log(message);
-        const expected = fs.readFileSync(testExpectedFile, 'utf8');
-        const result = fs.readFileSync(testLogFile, 'utf8');
-        assert.deepEqual(result, expected);
+        // logger.log(message);
+        const expected = fs.readFileSync(testExpectedFile, 'utf8').split(' ** ')[1].trim('\n');
+        const result = fs.readFileSync(testLogFile, 'utf8').split(' ** ')[1].trim('\n');
+        assert.equal(result, expected);
     });
 });
