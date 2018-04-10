@@ -30,17 +30,17 @@ describe('Logger class', () => {
         logger.log(message);
         const logOne = fs.readFileSync(testExpectedFile2, 'utf8').split('\r\n')[0];
         const logOneDate = logOne.split(' ** ')[0];
-        const logOneMessage = logOne.split(' ** ')[1];
+        const logOneMessage = logOne.split(' ** ')[1].trim('\r\n');
         const logTwo = fs.readFileSync(testExpectedFile2, 'utf8').split('\r\n')[1];
         const logTwoDate = logTwo.split(' ** ')[0];
-        const logTwoMessage = logTwo.split(' ** ')[1];
+        const logTwoMessage = logTwo.split(' ** ')[1].trim('\r\n');
 
         const d = new Date(logOneDate);
         const d2 = new Date(logTwoDate);
 
         assert.equal(isNaN(d.getTime()), false);
         assert.equal(isNaN(d2.getTime()), false);
-        // assert.equal(logOneMessage, message);
-        // assert.equal(logTwoMessage, message);
+        assert.equal(logOneMessage, message);
+        assert.equal(logTwoMessage, message);
     });
 });
