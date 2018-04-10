@@ -1,7 +1,5 @@
 const assert = require('assert');
 const fs = require('fs');
-const { promisify } = require('util');
-const unlink = promisify(require('fs').unlink);
 const Logger = require('../lib/logger/Logger');
 
 describe('Logger class', () => {
@@ -19,7 +17,6 @@ describe('Logger class', () => {
 
     it('logs message to file given', () => {
         logger.log(message);
-        // logger.log(message);
         const expected = fs.readFileSync(testExpectedFile, 'utf8').split(' ** ')[1].trim('\n');
         const result = fs.readFileSync(testLogFile, 'utf8').split(' ** ')[1].trim('\n');
         assert.equal(result, expected);
