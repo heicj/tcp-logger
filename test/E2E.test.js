@@ -16,7 +16,7 @@ describe('tests E2E', () => {
 
     beforeEach(done => {
         // logger = new Logger(testLogFile);  
-        fs.truncate(clientLogFile, 0, function(){ console.log('done'); }); /*eslint-disable-line */
+       
         app.listen(PORT, done);
     });
 
@@ -29,20 +29,18 @@ describe('tests E2E', () => {
     });
 
     afterEach(() => {
-        // client1.destroy();
+        client1.destroy();
+        fs.truncate(clientLogFile, 0, function(){ console.log('done'); }); /*eslint-disable-line */
         app.close();
     });
 
-    it.only('client writes message to log file', (done)=> {
+    it.skip('client writes message to log file', (done)=> {
         const message = 'Client message';
         client1.write(message, () => {
             const expectedMessage = fs.readFileSync(clientExpectedLog, 'utf8').split(' ** ')[1].trim('\n');
-            const clientLog = fs.readFileSync(clientLogFile, 'utf8')
-            // .split(' ** ')[1].trim('\n');
-            console.log('client log is: ', clientLog);
+            const clientLog = fs.readFileSync(clientLogFile, 'utf8').split(' ** ')[1].trim('\n');
             assert.equal(expectedMessage, clientLog);
             done();
-
         });
     });
 });
