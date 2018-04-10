@@ -11,6 +11,11 @@ describe('Logger class', () => {
     beforeEach(() => {
         logger = new Logger(testLogFile);  
         fs.truncate(testLogFile, 0, function(){ console.log('done'); }); /*eslint-disable-line */
+
+       
+    });
+
+    afterEach(() => {
     });
 
     const message = 'Hello World';
