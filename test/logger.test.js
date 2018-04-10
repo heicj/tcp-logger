@@ -29,11 +29,11 @@ describe('Logger class', () => {
         logger.log(message);
         logger.log(message);
 
-        const logOne = fs.readFileSync(testExpectedFile2, 'utf8').split('\r\n')[0];
+        const logOne = fs.readFileSync(testExpectedFile2, 'utf8').split('\n')[0];
         const logOneDate = logOne.split(' ** ')[0];
         const logOneMessage = logOne.split(' ** ')[1].trim('\r\n');
         
-        const logTwo = fs.readFileSync(testExpectedFile2, 'utf8').split('\r\n')[1];
+        const logTwo = fs.readFileSync(testExpectedFile2, 'utf8').split('\n')[1];
         const logTwoDate = logTwo.split(' ** ')[0];
         const logTwoMessage = logTwo.split(' ** ')[1].trim('\r\n');
 
