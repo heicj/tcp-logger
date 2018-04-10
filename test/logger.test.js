@@ -17,6 +17,13 @@ describe('Logger class', () => {
             });  
     });
 
+    after(() => {
+        unlink(testLogFile)
+            .catch(err => {
+                if(err.code !== 'ENOENT') throw err; 
+            }); 
+    });
+
     it('logs message to file given', () => {
         const message = 'Hello World';
         logger.log(message);
