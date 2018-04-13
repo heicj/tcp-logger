@@ -10,26 +10,21 @@ describe('Logger class', () => {
 
     beforeEach(() => {
         logger = new Logger(testLogFile);  
-        fs.truncate(testLogFile, 0, function(){ console.log('done'); }); /*eslint-disable-line */
-
+        logger.log(message);
        
-    });
-
-    afterEach(() => {
-        fs.truncate(testLogFile, 0, function(){ console.log('done'); }); /*eslint-disable-line */
     });
 
     const message = 'Hello World';
 
-    it.skip('logs message to file given', () => {
-        logger.log(message);
+    it('logs message to file given', () => {
         const expected = fs.readFileSync(testExpectedFile, 'utf8').split(' ** ')[1].trim('\n');
-        const result = fs.readFileSync(testLogFile, 'utf8').split(' ** ')[1].trim('\n');
-        assert.equal(result, expected);
+        setTimeout(() => {
+            const result = fs.readFileSync(testLogFile, 'utf8').split(' ** ')[1].trim('\n');
+            assert.equal(result, expected);
+        }, 750);
     });
 
     it('checks two logs and date added to logs', () => {
-        logger.log(message);
         logger.log(message);
 
         const logOne = fs.readFileSync(testExpectedFile2, 'utf8').split('\n')[0];
